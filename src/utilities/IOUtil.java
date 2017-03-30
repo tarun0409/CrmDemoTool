@@ -23,7 +23,7 @@ public class IOUtil {
 	public static JSONArray getRecordsFromCSV(HashMap<String,String> fieldTypes) throws Exception
 	{
 		JSONArray records = new JSONArray();
-		File csvDataFile = new File("src/data/Leads1.csv");
+		File csvDataFile = new File("src/data/Leads2.csv");
 		String[] headings = null;
 		boolean firstLine = true;
 		CSVParser csvRecords = CSVParser.parse(csvDataFile,Charset.defaultCharset() , CSVFormat.RFC4180);

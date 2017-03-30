@@ -34,5 +34,17 @@ public class ModuleUtil {
 		}
 		return ids;
 	}
+	public static boolean isDataEmpty(JSONObject data, String rootElementName) throws Exception
+	{
+		if(data.has(rootElementName))
+		{
+			JSONArray dataArr = data.getJSONArray(rootElementName);
+			if(dataArr.length()==0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
