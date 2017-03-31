@@ -69,13 +69,29 @@ public class IOUtil {
 				else if(dataType.equals("date"))
 				{
 					String dateString = trimString(csvRecord.get(i));
-					String value = DateUtil.getDateRange(dateString, "yyyy-mm-dd");
+					String value = null;
+					if(dateString!=null && dateString.startsWith("#"))
+					{
+						value = DateUtil.getDateByCustomFormat(dateString, "yyyy-mm-dd");
+					}
+					else
+					{
+						value = DateUtil.getDateByDefaultFormat(dateString, "yyyy-mm-dd");
+					}
 			    	record.put(headings[i], value);
 				}
 				else if(dataType.equals("datetime"))
 				{
 			    	String dateString = trimString(csvRecord.get(i));
-					String value = DateUtil.getDateRange(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+			    	String value = null;
+					if(dateString!=null && dateString.startsWith("#"))
+					{
+						value = DateUtil.getDateByCustomFormat(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+					}
+					else
+					{
+						value = DateUtil.getDateByDefaultFormat(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+					}
 			    	record.put(headings[i], value);
 				}
 				else if(dataType.equals("bigint") || dataType.equals("long"))
