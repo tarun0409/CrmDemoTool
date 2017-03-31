@@ -75,32 +75,49 @@ public class DateUtil {
 			TimeZone tz = TimeZone.getTimeZone(timeZone);
 			Calendar cal = Calendar.getInstance(tz);
 			String[] dateString = customDate.split("-");
+			if(dateString==null || dateString.length==0)
+			{
+				return getDateByDefaultFormat(TODAY, datePattern);
+			}
+			String dayString="", weekString="", monthString="", yearString="";
+			int i=0;
+			dayString = dateString[i++];
+			if(dateString.length>3)
+			{
+				weekString = dateString[i++];
+			}
+			monthString = dateString[i++];
+			yearString = dateString[i++];
 			try
 			{
-				int year = Integer.parseInt(dateString[2]);
+				int year = Integer.parseInt(yearString);
 				cal.set(Calendar.YEAR, year);
 			}
 			catch(Exception e)
 			{
-				cal = setCalendar(cal,dateString[2], true);	
+				cal = setCalendar(cal,yearString, true);	
 			}
 			try
 			{
-				int month = Integer.parseInt(dateString[1]);
+				int month = Integer.parseInt(monthString);
 				cal.set(Calendar.MONTH, month);
 			}
 			catch(Exception e)
 			{
-				cal = setCalendar(cal,dateString[1], true);	
+				cal = setCalendar(cal,monthString, true);	
+			}
+			if(dateString.length>3)
+			{
+				cal = setCalendar(cal,weekString, true);
 			}
 			try
 			{
-				int day = Integer.parseInt(dateString[0]);
+				int day = Integer.parseInt(dayString);
 				cal.set(Calendar.DATE, day);
 			}
 			catch(Exception e)
 			{
-				cal = setCalendar(cal,dateString[0], true);
+				cal = setCalendar(cal,dayString, true);
 			}
 			Date date = cal.getTime();
 			String returnDate = getFormattedDate(date, datePattern);

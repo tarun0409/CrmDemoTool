@@ -1,0 +1,6 @@
+authType=oauth
+authToken=1000.797280d38683c051c8e2f63cf291814b.059c65b9fa1ae6772e9203ce7b1fd62d
+baseUrl=https://crm.zoho.com
+apiVersion=2
+operations=insert,delete
+modules=Leads,Events

@@ -1,6 +1,8 @@
 package utilities;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
@@ -18,10 +20,36 @@ public class IOUtil {
 		str = str.replace("\"", "");
 		return str;
 	}
-	public static JSONArray getRecordsFromCSV(HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap) throws Exception
+	public static JSONObject getProperties() throws Exception
+	{
+		JSONObject properties = new JSONObject();
+		try(BufferedReader br = new BufferedReader(new FileReader("src/properties/app_properties.txt"))) {
+		    for(String line; (line = br.readLine()) != null; ) 
+		    {
+		        String[] property = line.split("=");
+		        Object finalValue;
+		        String key = property[0];
+		        String value = property[1];
+		        finalValue = value;
+		        if(DataTypes.jsonArrayTypes.contains(key))
+		        {
+		        	String[] values = value.split(",");
+		        	JSONArray vals = new JSONArray();
+		        	for(int i=0; i<values.length; i++)
+		        	{
+		        		vals.put(values[i]);
+		        	}
+		        	finalValue = vals;
+		        }
+		        properties.put(key, finalValue);
+		    }
+		}
+		return properties;
+	}
+	public static JSONArray getRecordsFromCSV(String module, HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap) throws Exception
 	{
 		JSONArray records = new JSONArray();
-		File csvDataFile = new File("src/data/Events.csv");
+		File csvDataFile = new File("src/data/"+module+".csv");
 		String[] headings = null;
 		boolean firstLine = true;
 		CSVParser csvRecords = CSVParser.parse(csvDataFile,Charset.defaultCharset() , CSVFormat.RFC4180);
@@ -86,7 +114,7 @@ public class IOUtil {
 			    	String value = null;
 					if(dateString!=null && dateString.startsWith("#"))
 					{
-						value = DateUtil.getDateByCustomFormat(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+						value = DateUtil.getDateByCustomFormat(dateString.substring(1), "yyyy-MM-dd'T'HH:mm:ssXXX");
 					}
 					else
 					{
