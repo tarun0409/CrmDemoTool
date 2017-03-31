@@ -19,17 +19,13 @@ import utilities.UrlUtil;
 
 public class Post {
 
-	private String authToken;
 	private String baseUrl;
-	private String apiVersion;
-	private String authType;
+	private String authorization;
 	static final Logger LOGGER = LogManager.getLogger(Post.class.getName());
 	public Post(JSONObject properties) throws JSONException
 	{
-		this.authToken = properties.getString("authToken");
-		this.baseUrl = properties.getString("baseUrl");
-		this.apiVersion = properties.getString("apiVersion");
-		this.authType = properties.getString("authType");
+		this.authorization = "Zoho-"+properties.getString("authType")+"token "+properties.getString("authToken");
+		this.baseUrl = UrlUtil.constructBaseUrl(properties.getString("baseUrl"), properties.getString("apiVersion"));
 	}
 	private void executePost(HttpPost httpPost, JSONObject data) throws Exception
 	{
@@ -51,11 +47,10 @@ public class Post {
 	}
 	public void postRecords(JSONObject data, String module) throws Exception
 	{
-		String url = UrlUtil.constructBaseUrl(baseUrl, apiVersion);
-		url=url+"/"+module;
+		String url = this.baseUrl+"/"+module;
 		LOGGER.debug("\n\n::::::::URL:::::::::    "+url+"     :::::::::::::::\n\n");
 		HttpPost httpPost = new HttpPost(url);
-		httpPost.addHeader("Authorization", "Zoho-"+this.authType+"token "+authToken);
+		httpPost.addHeader("Authorization", this.authorization);
 		JSONArray dataArr = data.getJSONArray("data");
 		int len = dataArr.length();
 		ArrayList<JSONObject> dataObj = new ArrayList<JSONObject>();

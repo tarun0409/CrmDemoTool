@@ -19,24 +19,20 @@ import utilities.UrlUtil;
 
 public class Get {
 	
-	private String authToken;
 	private String baseUrl;
-	private String apiVersion;
-	private String authType;
+	private String authorization;
 	static final Logger LOGGER = LogManager.getLogger(Get.class.getName());
 	public Get(JSONObject properties) throws JSONException
 	{
-		this.authToken = properties.getString("authToken");
-		this.baseUrl = properties.getString("baseUrl");
-		this.apiVersion = properties.getString("apiVersion");
-		this.authType = properties.getString("authType");
+		this.authorization = "Zoho-"+properties.getString("authType")+"token "+properties.getString("authToken");
+		this.baseUrl = UrlUtil.constructBaseUrl(properties.getString("baseUrl"), properties.getString("apiVersion"));
 	}
 	private JSONObject executeGet(String url, String rootElementName) throws Exception
 	{
 		LOGGER.debug("\n\n::::::::URL:::::::::    "+url+"     :::::::::::::::\n\n");
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
-		request.addHeader("Authorization", "Zoho-"+this.authType+"token "+authToken);
+		request.addHeader("Authorization", this.authorization);
 		HttpResponse response = client.execute(request);
 		LOGGER.debug("\n\n::::::::RESPONSE:::::::::    "+response.toString()+"     :::::::::::::::\n\n");
 		int statusCode = response.getStatusLine().getStatusCode();
@@ -64,8 +60,7 @@ public class Get {
 	}
 	public JSONObject getModuleFields(String module) throws Exception
 	{
-		String url = UrlUtil.constructBaseUrl(baseUrl, apiVersion);
-		url+="/settings/fields";
+		String url = this.baseUrl+"/settings/fields";
 		url = UrlUtil.addParam(url, "module", module);
 		
 		return executeGet(url, "modules");
@@ -73,8 +68,7 @@ public class Get {
 	public ArrayList<JSONObject> getRecords(String module) throws Exception
 	{
 		ArrayList<JSONObject> records = new ArrayList<JSONObject>();
-		String url = UrlUtil.constructBaseUrl(baseUrl, apiVersion);
-		url+="/"+module;
+		String url = this.baseUrl+"/"+module;
 		boolean moreRecords = true;
 		Integer page = 1;
 		while(moreRecords)

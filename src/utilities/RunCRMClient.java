@@ -17,7 +17,7 @@ public class RunCRMClient {
 	public static void main(String[] args) throws Exception{
 		JSONObject properties = new JSONObject();
 		properties.put("authType", "oauth");
-		properties.put("authToken", "1000.c327a2b8c4b64cbcb9112821be8a8297.3b0a26edf2737d238792e4ecfff6715a");
+		properties.put("authToken", "1000.b9ccc234263bc6f284d1e16846a48189.59b65aff899e615e8bed37de843007a5");
 		//properties.put("authToken", "b1b7bf76f99c59006a04ab0dde264a8e");
 		properties.put("baseUrl", "https://crm.zoho.com");
 		//properties.put("baseUrl", "https://crmqa.localzoho.com");
@@ -44,10 +44,10 @@ public class RunCRMClient {
 		
 		
 		/*   DELETE DATA   */
-//		Get getObj = new Get(properties);
-//		String[] ids = ModuleUtil.getRecordIds(getObj.getRecords("Leads"));
-//		Delete deleteObj = new Delete(properties);
-//		deleteObj.deleteIds("Leads", ids);
+		Get getObj = new Get(properties);
+		String[] ids = ModuleUtil.getRecordIds(getObj.getRecords("Leads"));
+		Delete deleteObj = new Delete(properties);
+		deleteObj.deleteIds("Leads", ids);
 		
 		
 	}

@@ -16,17 +16,13 @@ import org.json.JSONObject;
 import utilities.UrlUtil;
 
 public class Delete {
-	private String authToken;
 	private String baseUrl;
-	private String apiVersion;
-	private String authType;
+	private String authorization;
 	static final Logger LOGGER = LogManager.getLogger(Delete.class.getName());
 	public Delete(JSONObject properties) throws JSONException
 	{
-		this.authToken = properties.getString("authToken");
-		this.baseUrl = properties.getString("baseUrl");
-		this.apiVersion = properties.getString("apiVersion");
-		this.authType = properties.getString("authType");
+		this.authorization = "Zoho-"+properties.getString("authType")+"token "+properties.getString("authToken");
+		this.baseUrl = UrlUtil.constructBaseUrl(properties.getString("baseUrl"), properties.getString("apiVersion"));
 	}
 
 	private void executeDelete(HttpDelete request) throws Exception
@@ -48,9 +44,7 @@ public class Delete {
 	}
 	public void deleteIds(String module, String[] ids) throws Exception
 	{
-		String url = UrlUtil.constructBaseUrl(baseUrl, apiVersion);
-		url=url+"/"+module;
-		//url = UrlUtil.addParam(url, "ids", UrlUtil.makeValuesCommaSeparated(ids));
+		String url = this.baseUrl+"/"+module;
 		int len = ids.length;
 		int count = 0;
 		ArrayList<String> currIds = new ArrayList<String>();
@@ -79,7 +73,7 @@ public class Delete {
 			String delUrl = UrlUtil.addParam(url, "ids", UrlUtil.makeValuesCommaSeparated(delIds));
 			LOGGER.debug("\n\n::::::::URL:::::::::    "+delUrl+"     :::::::::::::::\n\n");
 			HttpDelete request = new HttpDelete(delUrl);
-			request.addHeader("Authorization", "Zoho-"+this.authType+"token "+authToken);
+			request.addHeader("Authorization", this.authorization);
 			executeDelete(request);
 			
 		}
