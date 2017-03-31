@@ -17,20 +17,20 @@ public class RunCRMClient {
 	public static void main(String[] args) throws Exception{
 		JSONObject properties = new JSONObject();
 		properties.put("authType", "oauth");
-		properties.put("authToken", "1000.b9ccc234263bc6f284d1e16846a48189.59b65aff899e615e8bed37de843007a5");
+		properties.put("authToken", "1000.b2739f3beeee03dc8267d17a3a8d5fa5.2f44f13463470010338bf18123312341");
 		//properties.put("authToken", "b1b7bf76f99c59006a04ab0dde264a8e");
 		properties.put("baseUrl", "https://crm.zoho.com");
 		//properties.put("baseUrl", "https://crmqa.localzoho.com");
 		properties.put("apiVersion", "2");
 		
 		/*   POST DATA  */
-//		Get getObj = new Get(properties);
-//		JSONObject fields = getObj.getModuleFields("Leads");
-//		JSONArray dataArray = IOUtil.getRecordsFromCSV(ModuleUtil.getFieldTypes(fields));
-//		JSONObject data = new JSONObject();
-//		data.put("data", dataArray);
-//		Post postObj = new Post(properties);
-//		postObj.postRecords(data, "Leads");
+		Get getObj = new Get(properties);
+		JSONObject fields = getObj.getModuleFields("Events");
+		JSONArray dataArray = IOUtil.getRecordsFromCSV(ModuleUtil.getFieldTypes(fields), ModuleUtil.getFieldLabelApiNameMap(fields));
+		JSONObject data = new JSONObject();
+		data.put("data", dataArray);
+		Post postObj = new Post(properties);
+		postObj.postRecords(data, "Events");
 		
 		
 		/*   GET DATA    */
@@ -44,10 +44,10 @@ public class RunCRMClient {
 		
 		
 		/*   DELETE DATA   */
-		Get getObj = new Get(properties);
-		String[] ids = ModuleUtil.getRecordIds(getObj.getRecords("Leads"));
-		Delete deleteObj = new Delete(properties);
-		deleteObj.deleteIds("Leads", ids);
+//		Get getObj = new Get(properties);
+//		String[] ids = ModuleUtil.getRecordIds(getObj.getRecords("Leads"));
+//		Delete deleteObj = new Delete(properties);
+//		deleteObj.deleteIds("Leads", ids);
 		
 		
 	}

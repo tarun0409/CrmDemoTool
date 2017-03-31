@@ -21,6 +21,19 @@ public class ModuleUtil {
 		}
 		return fieldTypes;
 	}
+	public static HashMap<String, String> getFieldLabelApiNameMap(JSONObject moduleData) throws Exception
+	{
+		HashMap<String,String> map = new HashMap<String,String>();
+		JSONArray fields = moduleData.getJSONArray("fields");
+		for(int i=0; i<fields.length(); i++)
+		{
+			JSONObject field = fields.getJSONObject(i);
+			String fieldLabel = field.getString("field_label");
+			String apiName = field.getString("api_name");
+			map.put(fieldLabel, apiName);
+		}
+		return map;
+	}
 	public static String[] getRecordIds(JSONObject data) throws Exception
 	{
 		String[] ids = null;

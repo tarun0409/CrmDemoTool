@@ -2,9 +2,6 @@ package utilities;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.csv.CSVFormat;
@@ -21,10 +18,10 @@ public class IOUtil {
 		str = str.replace("\"", "");
 		return str;
 	}
-	public static JSONArray getRecordsFromCSV(HashMap<String,String> fieldTypes) throws Exception
+	public static JSONArray getRecordsFromCSV(HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap) throws Exception
 	{
 		JSONArray records = new JSONArray();
-		File csvDataFile = new File("src/data/Leads2.csv");
+		File csvDataFile = new File("src/data/Events.csv");
 		String[] headings = null;
 		boolean firstLine = true;
 		CSVParser csvRecords = CSVParser.parse(csvDataFile,Charset.defaultCharset() , CSVFormat.RFC4180);
@@ -38,7 +35,7 @@ public class IOUtil {
 				headings = new String[recordLength];
 				for(int i=0; i<recordLength; i++)
 				{
-					headings[i] = trimString(csvRecord.get(i));
+					headings[i] = fieldLabelApiNameMap.get(trimString(csvRecord.get(i)));
 				}
 				continue;
 			}
@@ -72,18 +69,14 @@ public class IOUtil {
 				else if(dataType.equals("date"))
 				{
 					String dateString = trimString(csvRecord.get(i));
-					DateFormat dateParser = new SimpleDateFormat("yyyy-mm-dd");
-			    	SimpleDateFormat dateFormatter= new SimpleDateFormat("yyyy-mm-dd");
-			    	Date myDate = dateParser.parse(dateString);
-			    	record.put(headings[i], dateFormatter.format(myDate));
+					String value = DateUtil.getDateRange(dateString, "yyyy-mm-dd");
+			    	record.put(headings[i], value);
 				}
 				else if(dataType.equals("datetime"))
 				{
-					SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
-					SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
-					String dateString = trimString(csvRecord.get(i));
-					Date myDate = dateParser.parse(dateString);
-			    	record.put(headings[i], dateFormatter.format(myDate));
+			    	String dateString = trimString(csvRecord.get(i));
+					String value = DateUtil.getDateRange(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+			    	record.put(headings[i], value);
 				}
 				else if(dataType.equals("bigint") || dataType.equals("long"))
 				{
