@@ -11,6 +11,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class IOUtil {
@@ -46,11 +47,11 @@ public class IOUtil {
 			for(int i=0; i<recordLength; i++)
 			{
 				String dataType = fieldTypes.get(headings[i]);
-				if(dataType.equals("text") || dataType.equals("email"))
+				if(DataTypes.textTypes.contains(dataType))
 				{
 					record.put(headings[i], trimString(csvRecord.get(i)));
 				}
-				else if(dataType.equals("integer"))
+				else if(dataType.equals("integer")  || dataType.equals("autonumber"))
 				{
 					int value = Integer.parseInt(trimString(csvRecord.get(i)));
 					record.put(headings[i], value);
@@ -84,9 +85,72 @@ public class IOUtil {
 					Date myDate = dateParser.parse(dateString);
 			    	record.put(headings[i], dateFormatter.format(myDate));
 				}
-				else if(dataType.equals("bigint"))
+				else if(dataType.equals("bigint") || dataType.equals("long"))
 				{
 					long value = Long.parseLong(trimString(csvRecord.get(i)));
+					record.put(headings[i], value);
+				}
+				else if(dataType.equals("double"))
+				{
+					double value = Double.parseDouble(trimString(csvRecord.get(i)));
+					record.put(headings[i], value);
+				}
+				else if(dataType.equals("jsonobject"))
+				{
+					try
+					{
+						JSONObject value = new JSONObject(trimString(csvRecord.get(i)));
+						record.put(headings[i], value);
+					}
+					catch(JSONException e)
+					{
+						record.put(headings[i], trimString(csvRecord.get(i)));
+					}
+				}
+				else if(dataType.equals("jsonarray") || dataType.equals("multiselectpicklist"))
+				{
+					try
+					{
+						JSONArray value = new JSONArray(trimString(csvRecord.get(i)));
+						record.put(headings[i], value);
+					}
+					catch(JSONException e)
+					{
+						record.put(headings[i], trimString(csvRecord.get(i)));
+					}
+				}
+				else if(dataType.equals("picklist") || dataType.equals("formula"))
+				{
+					Object value = null;
+					try
+					{
+						value = Integer.parseInt(trimString(csvRecord.get(i)));
+					}
+					catch(Exception e)
+					{
+						try
+						{
+							value = Long.parseLong(trimString(csvRecord.get(i)));
+						}
+						catch(Exception e1)
+						{
+							try
+							{
+								value = Float.parseFloat(trimString(csvRecord.get(i)));
+							}
+							catch(Exception e3)
+							{
+								try
+								{
+									value = Double.parseDouble(trimString(csvRecord.get(i)));
+								}
+								catch(Exception e4)
+								{
+									value = trimString(csvRecord.get(i));
+								}
+							}
+						}
+					}
 					record.put(headings[i], value);
 				}
 			}

@@ -1,5 +1,6 @@
 package utilities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -33,6 +34,22 @@ public class ModuleUtil {
 			ids[i] = id;
 		}
 		return ids;
+	}
+	public static String[] getRecordIds(ArrayList<JSONObject> data) throws Exception
+	{
+		ArrayList<String> idsArray = new ArrayList<String>();
+		for(JSONObject dataObj : data)
+		{
+			JSONArray dataArr = dataObj.getJSONArray("data");
+			for(int i=0; i<dataArr.length(); i++)
+			{
+				JSONObject record = dataArr.getJSONObject(i);
+				String id = record.getString("id");
+				idsArray.add(id);
+			}
+		}
+		String[] ids = new String[idsArray.size()];
+		return idsArray.toArray(ids);
 	}
 	public static boolean isDataEmpty(JSONObject data, String rootElementName) throws Exception
 	{

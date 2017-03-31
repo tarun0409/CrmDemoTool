@@ -2,6 +2,7 @@ package httpoperations;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -28,15 +29,9 @@ public class Delete {
 		this.authType = properties.getString("authType");
 	}
 
-	public void deleteIds(String module, String[] ids) throws Exception
+	private void executeDelete(HttpDelete request) throws Exception
 	{
 		HttpClient client = HttpClientBuilder.create().build();
-		String url = UrlUtil.constructBaseUrl(baseUrl, apiVersion);
-		url=url+"/"+module;
-		url = UrlUtil.addParam(url, "ids", UrlUtil.makeValuesCommaSeparated(ids));
-		LOGGER.debug("\n\n::::::::URL:::::::::    "+url+"     :::::::::::::::\n\n");
-		HttpDelete request = new HttpDelete(url);
-		request.addHeader("Authorization", "Zoho-"+this.authType+"token "+authToken);
 		HttpResponse response = client.execute(request);
 		LOGGER.debug("\n\n::::::::RESPONSE:::::::::    "+response.toString()+"     :::::::::::::::\n\n");
 		BufferedReader rd = new BufferedReader(
@@ -49,5 +44,45 @@ public class Delete {
 		}
 
 		LOGGER.debug("\n\n::::::::RESPONSE BODY:::::::::\n\n\n"+result+"\n\n\n:::::::::::::::\n\n\n");
+		
+	}
+	public void deleteIds(String module, String[] ids) throws Exception
+	{
+		String url = UrlUtil.constructBaseUrl(baseUrl, apiVersion);
+		url=url+"/"+module;
+		//url = UrlUtil.addParam(url, "ids", UrlUtil.makeValuesCommaSeparated(ids));
+		int len = ids.length;
+		int count = 0;
+		ArrayList<String> currIds = new ArrayList<String>();
+		ArrayList<String[]> deleteIds = new ArrayList<String[]>();
+		for(int i=0; i<len; i++)
+		{
+			if(count==100)
+			{
+				count = 0;
+				String[] delIds = new String[currIds.size()];
+				delIds = currIds.toArray(delIds);
+				deleteIds.add(delIds);
+				currIds = new ArrayList<String>();
+			}
+			currIds.add(ids[i]);
+			count++;
+		}
+		if(currIds.size()!=0)
+		{
+			String[] delIds = new String[currIds.size()];
+			delIds = currIds.toArray(delIds);
+			deleteIds.add(delIds);
+		}
+		for(String[] delIds : deleteIds)
+		{
+			String delUrl = UrlUtil.addParam(url, "ids", UrlUtil.makeValuesCommaSeparated(delIds));
+			LOGGER.debug("\n\n::::::::URL:::::::::    "+delUrl+"     :::::::::::::::\n\n");
+			HttpDelete request = new HttpDelete(delUrl);
+			request.addHeader("Authorization", "Zoho-"+this.authType+"token "+authToken);
+			executeDelete(request);
+			
+		}
+		
 	}
 }
