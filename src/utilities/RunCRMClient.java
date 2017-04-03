@@ -13,7 +13,13 @@ import httpoperations.Post;
 public class RunCRMClient {
 
 	static final Logger LOGGER = LogManager.getLogger(RunCRMClient.class.getName());
-	public static void main(String[] args) throws Exception{
+	public static int reserve = 0;
+	public static boolean isReserved()
+	{
+		return reserve==1?true:false;
+	}
+	public void startProcess() throws Exception{
+		reserve=1;
 		JSONObject properties = IOUtil.getProperties();
 		System.out.println(properties.toString());
 		JSONArray modules = properties.getJSONArray("modules");
@@ -47,7 +53,7 @@ public class RunCRMClient {
 				}
 			}
 		}
-		
+		reserve=0;
 		
 		
 	}

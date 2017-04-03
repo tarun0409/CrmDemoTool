@@ -23,7 +23,8 @@ public class IOUtil {
 	public static JSONObject getProperties() throws Exception
 	{
 		JSONObject properties = new JSONObject();
-		try(BufferedReader br = new BufferedReader(new FileReader("src/properties/app_properties.txt"))) {
+		
+		try(BufferedReader br = new BufferedReader(new FileReader("/Users/tarun-4522/Documents/Projects/CRMClientTool/src/properties/app_properties.txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) 
 		    {
 		        String[] property = line.split("=");
@@ -49,7 +50,7 @@ public class IOUtil {
 	public static JSONArray getRecordsFromCSV(String module, HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap) throws Exception
 	{
 		JSONArray records = new JSONArray();
-		File csvDataFile = new File("src/data/"+module+".csv");
+		File csvDataFile = new File("/Users/tarun-4522/Documents/Projects/CRMClientTool/src/data/"+module+".csv");
 		String[] headings = null;
 		boolean firstLine = true;
 		CSVParser csvRecords = CSVParser.parse(csvDataFile,Charset.defaultCharset() , CSVFormat.RFC4180);
