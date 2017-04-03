@@ -4,16 +4,22 @@
 <html>
 <head>
 <%@ page import="utilities.RunCRMClient" %>
+<%@ page import="utilities.AuthUtil" %>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <a href="CRMTool.jsp" class="button">Go Back</a>
 <%
+	System.out.println(request.getParameter("code"));
 	if(!RunCRMClient.isReserved())
 	{
 		RunCRMClient client = new RunCRMClient();
-		  client.startProcess();	
+		String code=request.getParameter("code");
+		System.out.println(code);
+		String authToken = AuthUtil.getAuthtoken(code);
+		client.startProcess(authToken);	
 	}
 	else
 	{

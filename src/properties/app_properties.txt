@@ -1,5 +1,4 @@
 authType=oauth
-authToken=1000.01aa3001674956604e13aa4bf4b0f09c.fdacbaa8772753dc7f662f377b4c2233
 baseUrl=https://crm.zoho.com
 apiVersion=2
 operations=insert,delete

@@ -18,9 +18,10 @@ public class RunCRMClient {
 	{
 		return reserve==1?true:false;
 	}
-	public void startProcess() throws Exception{
+	public void startProcess(String authToken) throws Exception{
 		reserve=1;
 		JSONObject properties = IOUtil.getProperties();
+		properties.put("authToken", authToken);
 		System.out.println(properties.toString());
 		JSONArray modules = properties.getJSONArray("modules");
 		LOGGER.debug("\n\n\n:::::::::::::::::MODULES OBTAINED:::::::::::::::::::\n\n"+modules.toString()+"\n\n::::::::::::::::::::::::::\n\n");
