@@ -13,7 +13,7 @@ public class AuthUtil {
 	
 	private static final String clientId = "1000.Y6HRBGVXDSZ2753563NHSIAKRDHS3E";
 	private static final String clientSecret = "a4e24519e2c2f25c8c536cda8957653ff701428d89";
-	private static final String redirectUrl = "http://localhost:7000/CRMClientTool/StartProcess.jsp";
+	private static final String redirectUrl = "http://zcrm-u12-opti.csez.zohocorpin.com:7000/CRMClientTool/StartProcess.jsp";
 	public static String getAuthtoken(String grantToken) throws Exception
 	{
 		String url = "https://accounts.zoho.com/oauth/v2/token?code="+grantToken+"&redirect_uri="+redirectUrl+"&client_id="+clientId+"&client_secret="+clientSecret+"&grant_type=authorization_code";

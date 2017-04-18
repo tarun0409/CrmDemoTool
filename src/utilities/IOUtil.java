@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.csv.CSVFormat;
@@ -24,7 +26,7 @@ public class IOUtil {
 	{
 		JSONObject properties = new JSONObject();
 		
-		try(BufferedReader br = new BufferedReader(new FileReader("/Users/tarun-4522/Documents/Projects/CRMClientTool/src/properties/app_properties.txt"))) {
+		try(BufferedReader br = new BufferedReader(new FileReader("/home/test/TarunProjects/Projects/CRMClientTool/src/properties/app_properties.txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) 
 		    {
 		        String[] property = line.split("=");
@@ -49,8 +51,11 @@ public class IOUtil {
 	}
 	public static JSONArray getRecordsFromCSV(String module, HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap) throws Exception
 	{
+		System.out.println("*****************************MODULE = "+module+" ******************************");
+		System.out.println("**************************\n"+fieldTypes+"\n********************");
+		System.out.println("**************************\n"+fieldLabelApiNameMap+"\n********************");
 		JSONArray records = new JSONArray();
-		File csvDataFile = new File("/Users/tarun-4522/Documents/Projects/CRMClientTool/src/data/"+module+".csv");
+		File csvDataFile = new File("/home/test/TarunProjects/Projects/CRMClientTool/src/data/"+module+".csv");
 		String[] headings = null;
 		boolean firstLine = true;
 		CSVParser csvRecords = CSVParser.parse(csvDataFile,Charset.defaultCharset() , CSVFormat.RFC4180);
@@ -72,72 +77,229 @@ public class IOUtil {
 			recordLength = csvRecord.size();
 			for(int i=0; i<recordLength; i++)
 			{
+				if(headings[i]==null)
+				{
+					continue;
+				}
 				String dataType = fieldTypes.get(headings[i]);
-				if(DataTypes.textTypes.contains(dataType))
+				System.out.println(headings[i]+"======>"+dataType);
+				if(DataTypes.timeTypes.contains(headings[i]))
+				{
+					continue;
+				}
+				else if(DataTypes.textTypes.contains(dataType))
 				{
 					record.put(headings[i], trimString(csvRecord.get(i)));
 				}
+				else if(dataType.equals("ownerlookup"))
+				{
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					try
+					{
+						long value = Long.parseLong(str);
+						record.put(headings[i], value);
+					}
+					catch(Exception e)
+					{
+						try
+						{
+							String[] temps = str.split("_");
+							if(temps.length>1)
+							{
+								long value = Long.parseLong(temps[1]);
+								record.put(headings[i], value);
+							}
+						}
+						catch(Exception e1)
+						{
+							continue;
+						}
+					}
+				}
+				else if(dataType.equals("lookup"))
+				{
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					try
+					{
+						long value = Long.parseLong(str);
+						record.put(headings[i], value);
+					}
+					catch(Exception e)
+					{
+						try
+						{
+							String[] temps = str.split("_");
+							if(temps.length>1)
+							{
+								long value = Long.parseLong(temps[1]);
+								record.put(headings[i], value);
+							}
+						}
+						catch(Exception e1)
+						{
+							continue;
+						}
+					}
+				}
 				else if(dataType.equals("integer")  || dataType.equals("autonumber"))
 				{
-					int value = Integer.parseInt(trimString(csvRecord.get(i)));
-					record.put(headings[i], value);
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					if(str==null)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
+					try
+					{
+						int value = Integer.parseInt(str);
+						record.put(headings[i], value);
+					}
+					catch(Exception e)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
 				}
 				else if(dataType.equals("boolean"))
 				{
-			    	record.put(headings[i], (trimString(csvRecord.get(i))).equals("true"));
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					if(str==null)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
+			    	record.put(headings[i], str.equals("true"));
 				}
 				else if(dataType.equals("currency"))
 				{
-					Double val = new Double(trimString(csvRecord.get(i)));
-					Double db3 = Double.parseDouble(val.toString());
-					Double temp = Math.pow(10.0, 2);
-					Double db2 =(double)Math.round(db3 * temp) / temp;
-					val = new Double(db2);
-					record.put(headings[i], val);
+					try
+					{
+						Double val = new Double(trimString(csvRecord.get(i)));
+						Double db3 = Double.parseDouble(val.toString());
+						Double temp = Math.pow(10.0, 2);
+						Double db2 =(double)Math.round(db3 * temp) / temp;
+						val = new Double(db2);
+						record.put(headings[i], val);
+					}
+					catch(Exception e)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
 				}
 				else if(dataType.equals("date"))
 				{
 					String dateString = trimString(csvRecord.get(i));
-					String value = null;
-					if(dateString!=null && dateString.startsWith("#"))
+					dateString = dateString != null? dateString = dateString.trim() : dateString;
+					if(dateString==null)
 					{
-						value = DateUtil.getDateByCustomFormat(dateString, "yyyy-mm-dd");
+						record.put(headings[i], JSONObject.NULL);
+					}
+					if(dateString==null || dateString.equals(""))
+					{
+						record.put(headings[i], JSONObject.NULL);
 					}
 					else
 					{
-						value = DateUtil.getDateByDefaultFormat(dateString, "yyyy-mm-dd");
+						try
+						{
+							String value = null;
+				    		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yy");
+				    		Date date = format1.parse(dateString);
+				    		value = DateUtil.getFormattedDate(date, "yyyy-MM-dd");
+				    		record.put(headings[i], value);
+						}
+						catch(Exception e)
+						{
+							String value = null;
+							System.out.println("***********heading*******"+headings[i]+"***********");
+							System.out.println("***********datestring*******"+dateString+"***********");
+
+							value = DateUtil.getDate(dateString, "yyyy-MM-dd");
+					    	record.put(headings[i], value);
+						}
 					}
-			    	record.put(headings[i], value);
 				}
 				else if(dataType.equals("datetime"))
 				{
-			    	String dateString = trimString(csvRecord.get(i));
-			    	String value = null;
-					if(dateString!=null && dateString.startsWith("#"))
+					String dateString = trimString(csvRecord.get(i));
+					dateString = dateString != null? dateString = dateString.trim() : dateString;
+					if(dateString==null)
 					{
-						value = DateUtil.getDateByCustomFormat(dateString.substring(1), "yyyy-MM-dd'T'HH:mm:ssXXX");
+						record.put(headings[i], JSONObject.NULL);
 					}
-					else
+			    	if(dateString==null || dateString.equals(""))
 					{
-						value = DateUtil.getDateByDefaultFormat(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+						record.put(headings[i], JSONObject.NULL);
 					}
-			    	record.put(headings[i], value);
+			    	else
+			    	{
+
+			    		try
+			    		{
+			    			String value = null;
+				    		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yy hh:mm");
+				    		Date date = format1.parse(dateString);
+				    		value = DateUtil.getFormattedDate(date, "yyyy-MM-dd'T'HH:mm:ssXXX");
+				    		record.put(headings[i], value);
+			    		}
+			    		catch(Exception e)
+			    		{
+				    		String value = null;
+					    	System.out.println("***********heading*******"+headings[i]+"***********");
+					    	value = DateUtil.getDate(dateString, "yyyy-MM-dd'T'HH:mm:ssXXX");
+					    	record.put(headings[i], value);
+			    		}
+			    		
+			    	}
 				}
 				else if(dataType.equals("bigint") || dataType.equals("long"))
 				{
-					long value = Long.parseLong(trimString(csvRecord.get(i)));
-					record.put(headings[i], value);
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					if(str==null)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
+					try
+					{
+						long value = Long.parseLong(str);
+						record.put(headings[i], value);
+					}
+					catch(Exception e)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
 				}
 				else if(dataType.equals("double"))
 				{
-					double value = Double.parseDouble(trimString(csvRecord.get(i)));
-					record.put(headings[i], value);
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					if(str==null)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
+					try
+					{
+						double value = Double.parseDouble(str);
+						record.put(headings[i], value);
+					}
+					catch(Exception e)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
 				}
 				else if(dataType.equals("jsonobject"))
 				{
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					if(str==null)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
 					try
 					{
-						JSONObject value = new JSONObject(trimString(csvRecord.get(i)));
+						JSONObject value = new JSONObject(str);
 						record.put(headings[i], value);
 					}
 					catch(JSONException e)
@@ -147,9 +309,15 @@ public class IOUtil {
 				}
 				else if(dataType.equals("jsonarray") || dataType.equals("multiselectpicklist"))
 				{
+					String str = trimString(csvRecord.get(i));
+					str = str != null? str = str.trim() : str;
+					if(str==null)
+					{
+						record.put(headings[i], JSONObject.NULL);
+					}
 					try
 					{
-						JSONArray value = new JSONArray(trimString(csvRecord.get(i)));
+						JSONArray value = new JSONArray(str);
 						record.put(headings[i], value);
 					}
 					catch(JSONException e)

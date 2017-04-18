@@ -63,7 +63,7 @@ public class Get {
 		String url = this.baseUrl+"/settings/fields";
 		url = UrlUtil.addParam(url, "module", module);
 		
-		return executeGet(url, "modules");
+		return executeGet(url, "fields");
 	}
 	public ArrayList<JSONObject> getRecords(String module) throws Exception
 	{

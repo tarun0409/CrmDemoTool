@@ -62,66 +62,13 @@ public class DateUtil {
 			String dateString=dtpat.format(date);
 			return dateString;
 		}
-		public static String getDateByDefaultFormat(String type, String datePattern) throws Exception
+		public static String getDate(String type, String datePattern) throws Exception
 		{
 			TimeZone tz = TimeZone.getTimeZone(timeZone);
 			Calendar cal = Calendar.getInstance(tz);
 			Date date = (setCalendar(cal, type, false)).getTime();
 			String dateString = getFormattedDate(date, datePattern);
 			return dateString;
-		}
-		public static String getDateByCustomFormat(String customDate, String datePattern) throws Exception
-		{
-			TimeZone tz = TimeZone.getTimeZone(timeZone);
-			Calendar cal = Calendar.getInstance(tz);
-			String[] dateString = customDate.split("-");
-			if(dateString==null || dateString.length==0)
-			{
-				return getDateByDefaultFormat(TODAY, datePattern);
-			}
-			String dayString="", weekString="", monthString="", yearString="";
-			int i=0;
-			dayString = dateString[i++];
-			if(dateString.length>3)
-			{
-				weekString = dateString[i++];
-			}
-			monthString = dateString[i++];
-			yearString = dateString[i++];
-			try
-			{
-				int year = Integer.parseInt(yearString);
-				cal.set(Calendar.YEAR, year);
-			}
-			catch(Exception e)
-			{
-				cal = setCalendar(cal,yearString, true);	
-			}
-			try
-			{
-				int month = Integer.parseInt(monthString);
-				cal.set(Calendar.MONTH, month);
-			}
-			catch(Exception e)
-			{
-				cal = setCalendar(cal,monthString, true);	
-			}
-			if(dateString.length>3)
-			{
-				cal = setCalendar(cal,weekString, true);
-			}
-			try
-			{
-				int day = Integer.parseInt(dayString);
-				cal.set(Calendar.DATE, day);
-			}
-			catch(Exception e)
-			{
-				cal = setCalendar(cal,dayString, true);
-			}
-			Date date = cal.getTime();
-			String returnDate = getFormattedDate(date, datePattern);
-			return returnDate;
 		}
 		public static Calendar setCalendar(Calendar cal, String type, boolean fromCurrentDate) throws Exception 
 		{
@@ -270,79 +217,37 @@ public class DateUtil {
 			}
 			else if( type.equals( THISWEEK ) )
 			{
-				if(!fromCurrentDate)
-				{
-					int dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
-					cal.add( Calendar.DATE, -dayOfWeek + 1 );
-				}
+				int dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
+				cal.add( Calendar.DATE, -dayOfWeek + 1 );
 				return cal;
 			}
 			else if( type.equals( NEXTWEEK ) )
 			{
-				if(!fromCurrentDate)
-				{
-					int dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
-					cal.add( Calendar.DATE, -dayOfWeek + 8 );
-				}
-				else
-				{
-					cal.add( Calendar.DATE, 7 );
-				}
+				int dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
+				cal.add( Calendar.DATE, -dayOfWeek + 8 );
 				return cal;
 			}
 			else if( type.equals( LASTWEEK ) )
 			{
-				if(!fromCurrentDate)
-				{
-					int dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
-					cal.add( Calendar.DATE, -dayOfWeek - 6 );
-				}
-				else
-				{
-					cal.add( Calendar.DATE, -7 );
-				}
+				int dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
+				cal.add( Calendar.DATE, -dayOfWeek - 6 );
 				return cal;
 			}
 			else if( type.equals( THISMONTH ) )
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-				}
+				cal.set( Calendar.DATE, 1 );
 				return cal;
 			}
 			else if( type.equals( LASTMONTH ) )
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, -1 );
-				}
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, -1 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set( Calendar.DATE, 1 );
+				cal.add( Calendar.MONTH, -1 );
 				return cal;
 			}
 			else if( type.equals( NEXTMONTH ) )
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, 1 );
-				}
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, 1 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set( Calendar.DATE, 1 );
+				cal.add( Calendar.MONTH, 1 );
 				return cal;
 			}        
 			else if( type.equals( LAST7DAYS ) )        
@@ -367,36 +272,14 @@ public class DateUtil {
 			}
 			else if( type.equals( LAST6MONTHS ) )        
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, -6 );
-				}
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, -6 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set( Calendar.DATE, 1 );
+				cal.add( Calendar.MONTH, -6 );
 				return cal;
 			}
 			else if( type.equals( LAST12MONTHS ) )        
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, -12 );
-				}
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, -12 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set( Calendar.DATE, 1 );
+				cal.add( Calendar.MONTH, -12 );
 				return cal;
 			}
 			else if( type.equals( NEXT7DAYS ) )        
@@ -421,78 +304,31 @@ public class DateUtil {
 			}
 			else if( type.equals( NEXT6MONTHS ) )        
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, 1 );
-				}
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, 6 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set( Calendar.DATE, 1 );
+				cal.add( Calendar.MONTH, 1 );
 				return cal;
 			}
 			else if( type.equals( NEXT12MONTHS ) )        
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, 1 );
-				}
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.MONTH, 12 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set( Calendar.DATE, 1 );
+				cal.add( Calendar.MONTH, 1 );
 				return cal;
 			}
 			else if(THISYEAR.equals(type))
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set(Calendar.DAY_OF_YEAR, 1);
-				}    
+				cal.set(Calendar.DAY_OF_YEAR, 1);    
 				return cal;
 			}
 			else if(LASTYEAR.equals(type))
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set(Calendar.DAY_OF_YEAR, 1);
-					cal.add(Calendar.YEAR, -1);
-				}   
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.YEAR, -1 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set(Calendar.DAY_OF_YEAR, 1);
+				cal.add(Calendar.YEAR, -1);
 				return cal;
 			}
 			else if(NEXTYEAR.equals(type))
 			{
-				if(!fromCurrentDate)
-				{
-					cal.set(Calendar.DAY_OF_YEAR, 1);
-					cal.add(Calendar.YEAR, 1);
-				}   
-				else
-				{
-					int day = cal.get(Calendar.DATE);
-					cal.set( Calendar.DATE, 1 );
-					cal.add( Calendar.YEAR, 1 );
-					int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					cal.set(Calendar.DATE, (day<=maxDay? day : maxDay));
-				}
+				cal.set(Calendar.DAY_OF_YEAR, 1);
+				cal.add(Calendar.YEAR, 1);
 				return cal;
 			}
 			return null;

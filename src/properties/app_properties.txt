@@ -1,5 +1,5 @@
 authType=oauth
 baseUrl=https://crm.zoho.com
 apiVersion=2
-operations=insert,delete
-modules=Leads,Events
+operations=delete,insert
+modules=Leads,Contacts,Accounts,Deals,Events,Campaigns
