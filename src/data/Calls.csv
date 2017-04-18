@@ -1,0 +1,101 @@
+Subject,Call Type,Call Purpose,Contact Name,Related To,Call Start Time,Call Duration,Call Duration (in seconds),Description,Billable,Call Result,CTI Entry,Reminder
+luctus,Outbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,vestibulum ac est lacinia,true,failure,false,15 mins
+vestibulum,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,posuere cubilia,false,tentative,true,15 mins
+et,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,sapien arcu,true,success,true,10 mins
+etiam,Outbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,consequat dui,true,tentative,false,15 mins
+curae,Outbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,nunc purus phasellus in,true,success,true,5 mins
+porttitor,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,praesent lectus,true,failure,true,5 mins
+nisi,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,ut nunc vestibulum,false,failure,true,10 mins
+faucibus,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,consequat nulla nisl,false,failure,false,10 mins
+cubilia,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,tellus semper interdum,true,success,true,5 mins
+dolor,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,phasellus in felis donec,false,success,true,10 mins
+venenatis,Outbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,bibendum imperdiet,false,success,false,5 mins
+quam,Outbound,Prospecting,nil,Leads,11/11/2017 08:30,50,50,rutrum nulla,false,failure,true,15 mins
+laoreet,Outbound,Demo,nil,Accounts,11/11/2017 08:30,50,50,sed magna,true,failure,false,15 mins
+tincidunt,Inbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,vestibulum quam sapien varius,true,failure,false,10 mins
+vestibulum,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,tempor turpis,false,tentative,false,5 mins
+nec,Outbound,Demo,nil,Leads,11/11/2017 08:30,50,50,fermentum justo,true,failure,true,10 mins
+accumsan,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,mollis molestie lorem quisque,true,success,true,5 mins
+non,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,pellentesque ultrices mattis odio,true,failure,true,10 mins
+accumsan,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,sem praesent id massa,true,success,false,5 mins
+donec,Outbound,Administrative,nil,Accounts,11/11/2017 08:30,50,50,aenean fermentum,true,success,true,15 mins
+viverra,Outbound,Administrative,nil,Accounts,11/11/2017 08:30,50,50,id pretium iaculis,true,tentative,false,5 mins
+odio,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,ut odio,false,failure,false,15 mins
+at,Inbound,Prospecting,nil,Leads,11/11/2017 08:30,50,50,sem sed sagittis,true,failure,true,5 mins
+pharetra,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,ut massa,false,failure,true,15 mins
+eget,Outbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,nulla quisque arcu libero,false,success,false,5 mins
+vulputate,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,arcu libero rutrum ac,true,failure,false,5 mins
+tincidunt,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,nibh quisque,false,failure,true,15 mins
+orci,Inbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,in faucibus orci luctus,true,failure,false,10 mins
+mi,Outbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,interdum in ante vestibulum,true,success,true,5 mins
+dui,Inbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,porta volutpat erat,true,tentative,true,5 mins
+luctus,Inbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,bibendum imperdiet,true,success,true,15 mins
+hac,Inbound,Negotiation,nil,Leads,11/11/2017 08:30,50,50,condimentum curabitur in,false,tentative,true,10 mins
+hendrerit,Outbound,Negotiation,nil,Leads,11/11/2017 08:30,50,50,id nisl venenatis lacinia,true,tentative,false,15 mins
+justo,Inbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,aliquam convallis nunc proin,false,success,true,5 mins
+vel,Inbound,Negotiation,nil,Leads,11/11/2017 08:30,50,50,quisque porta,false,tentative,false,10 mins
+sodales,Outbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,non mattis pulvinar nulla,true,success,true,10 mins
+luctus,Outbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,turpis sed,true,tentative,false,15 mins
+ridiculus,Inbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,interdum venenatis turpis,false,tentative,true,5 mins
+consequat,Inbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,mauris laoreet ut,false,tentative,true,5 mins
+dapibus,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,in sapien iaculis,true,failure,false,10 mins
+vel,Inbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,pede libero quis orci,true,failure,true,10 mins
+morbi,Outbound,Negotiation,nil,Leads,11/11/2017 08:30,50,50,potenti in eleifend quam,true,success,false,10 mins
+elementum,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,pede ac diam,false,failure,true,15 mins
+ultrices,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,vitae mattis,false,success,true,15 mins
+nisi,Inbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,sapien a libero nam,true,tentative,true,15 mins
+quis,Inbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,gravida sem praesent id,true,tentative,false,15 mins
+ultrices,Inbound,Administrative,nil,Accounts,11/11/2017 08:30,50,50,in faucibus orci,true,success,true,10 mins
+nulla,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,blandit nam nulla integer,false,failure,true,5 mins
+eu,Inbound,Demo,nil,Accounts,11/11/2017 08:30,50,50,condimentum id luctus nec,true,tentative,true,15 mins
+at,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,nulla facilisi cras non,false,success,true,5 mins
+lacus,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,aliquet maecenas,true,failure,true,5 mins
+natoque,Outbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,proin risus,false,tentative,false,15 mins
+blandit,Inbound,Demo,nil,Accounts,11/11/2017 08:30,50,50,sed tincidunt,false,failure,true,10 mins
+sit,Outbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,curae duis,true,tentative,true,5 mins
+eget,Outbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,hendrerit at vulputate vitae,false,failure,false,15 mins
+sapien,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,fusce consequat,true,tentative,true,15 mins
+id,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,semper porta volutpat,true,success,false,15 mins
+nisl,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,donec ut,true,failure,false,5 mins
+at,Outbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,a libero,false,success,true,10 mins
+faucibus,Inbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,eleifend donec,true,failure,true,15 mins
+volutpat,Inbound,Demo,nil,Accounts,11/11/2017 08:30,50,50,sit amet consectetuer adipiscing,false,success,false,5 mins
+consequat,Inbound,Negotiation,nil,Leads,11/11/2017 08:30,50,50,suscipit ligula in,true,tentative,false,15 mins
+ante,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,eros viverra eget,true,failure,false,10 mins
+odio,Outbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,adipiscing lorem vitae mattis,true,tentative,false,10 mins
+odio,Outbound,Prospecting,nil,Leads,11/11/2017 08:30,50,50,in purus eu magna,false,failure,true,5 mins
+nam,Inbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,turpis adipiscing lorem vitae,false,tentative,false,5 mins
+eros,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,semper interdum,false,tentative,true,10 mins
+dapibus,Outbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,nisl duis ac,true,success,true,10 mins
+non,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,nibh in,false,success,false,15 mins
+eros,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,placerat ante nulla,false,failure,false,15 mins
+felis,Inbound,Administrative,nil,Accounts,11/11/2017 08:30,50,50,enim blandit,true,success,false,15 mins
+mattis,Outbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,pede ac diam,false,success,true,10 mins
+urna,Outbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,amet cursus,true,failure,true,5 mins
+sed,Inbound,Prospecting,nil,Leads,11/11/2017 08:30,50,50,proin interdum mauris,false,success,true,15 mins
+sapien,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,orci nullam molestie,true,tentative,true,5 mins
+rhoncus,Outbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,id mauris vulputate,false,tentative,false,5 mins
+ut,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,sem mauris,true,tentative,true,15 mins
+hendrerit,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,consequat nulla nisl nunc,false,failure,false,15 mins
+morbi,Inbound,Negotiation,nil,Accounts,11/11/2017 08:30,50,50,sollicitudin ut,true,failure,false,5 mins
+sit,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,rutrum neque aenean auctor,false,success,false,5 mins
+luctus,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,ultrices enim lorem,true,success,false,5 mins
+nam,Outbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,adipiscing lorem,false,success,false,10 mins
+parturient,Outbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,quisque ut erat curabitur,true,tentative,true,15 mins
+fusce,Inbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,id consequat in consequat,true,failure,false,10 mins
+justo,Outbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,quis turpis sed ante,false,tentative,true,15 mins
+nam,Inbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,duis bibendum morbi,true,tentative,false,5 mins
+est,Outbound,Prospecting,nil,Accounts,11/11/2017 08:30,50,50,ultrices vel augue,false,success,false,10 mins
+ultrices,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,sodales sed tincidunt,true,failure,false,10 mins
+odio,Inbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,mi nulla ac enim,true,failure,true,15 mins
+aliquam,Inbound,Demo,nil,Leads,11/11/2017 08:30,50,50,nonummy maecenas,false,tentative,false,10 mins
+dapibus,Outbound,Demo,nil,Accounts,11/11/2017 08:30,50,50,mattis odio donec,true,tentative,true,15 mins
+tortor,Outbound,Prospecting,nil,Leads,11/11/2017 08:30,50,50,consequat ut,false,tentative,false,5 mins
+at,Inbound,Negotiation,nil,Contacts,11/11/2017 08:30,50,50,tellus semper interdum,false,success,true,5 mins
+eget,Outbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,nascetur ridiculus mus,true,tentative,true,10 mins
+posuere,Inbound,Demo,nil,Accounts,11/11/2017 08:30,50,50,leo rhoncus,true,tentative,true,10 mins
+eu,Outbound,Administrative,nil,Leads,11/11/2017 08:30,50,50,lorem quisque ut erat,false,success,false,15 mins
+adipiscing,Outbound,Administrative,nil,Contacts,11/11/2017 08:30,50,50,suspendisse potenti nullam porttitor,false,tentative,true,15 mins
+eget,Inbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,odio porttitor,false,failure,false,10 mins
+luctus,Inbound,Demo,nil,Contacts,11/11/2017 08:30,50,50,leo odio porttitor,true,success,false,5 mins
+platea,Outbound,Prospecting,nil,Contacts,11/11/2017 08:30,50,50,quis turpis,false,success,false,15 mins

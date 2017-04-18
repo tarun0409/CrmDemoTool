@@ -34,6 +34,24 @@ public class ModuleUtil {
 		}
 		return map;
 	}
+	public static JSONArray getLookupFields(JSONObject moduleData) throws Exception
+	{
+		JSONArray lookups = new JSONArray();
+		JSONArray fields = moduleData.getJSONArray("fields");
+		for(int i=0; i<fields.length(); i++)
+		{
+			JSONObject field = fields.getJSONObject(i);
+			String dataType = field.getString("data_type");
+			if(dataType.equals("lookup"))
+			{
+				JSONObject lookup = field.getJSONObject("lookup");
+				lookup.put("field_label", field.getString("field_label"));
+				lookup.put("api_name", field.getString("api_name"));
+				lookups.put(lookup);
+			}
+		}
+		return lookups;
+	}
 	public static String[] getRecordIds(JSONObject data) throws Exception
 	{
 		String[] ids = null;

@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utilities.DataUtil;
 import utilities.UrlUtil;
 
 public class Post {
@@ -27,7 +28,7 @@ public class Post {
 		this.authorization = "Zoho-"+properties.getString("authType")+"token "+properties.getString("authToken");
 		this.baseUrl = UrlUtil.constructBaseUrl(properties.getString("baseUrl"), properties.getString("apiVersion"));
 	}
-	private void executePost(HttpPost httpPost, JSONObject data) throws Exception
+	private String executePost(HttpPost httpPost, JSONObject data) throws Exception
 	{
 		HttpClient client = HttpClientBuilder.create().build();
 		LOGGER.debug("\n\n::::::::SENDING DATA:::::::::\n\n\n"+data+"\n\n\n:::::::::::::::\n\n");
@@ -44,8 +45,9 @@ public class Post {
 		}
 
 		LOGGER.debug("\n\n::::::::RESPONSE BODY:::::::::\n\n\n"+result+"\n\n\n:::::::::::::::\n\n\n");
+		return result.toString();
 	}
-	public void postRecords(JSONObject data, String module) throws Exception
+	public void postRecords(JSONObject data, String module, DataUtil dataUtilObj) throws Exception
 	{
 		String url = this.baseUrl+"/"+module;
 		LOGGER.debug("\n\n::::::::URL:::::::::    "+url+"     :::::::::::::::\n\n");
@@ -77,7 +79,8 @@ public class Post {
 		}
 		for(JSONObject recData : dataObj)
 		{
-			executePost(httpPost, recData);
+			String result = executePost(httpPost, recData);
+			dataUtilObj.collectIds(module, result);
 		}
 	}
 }

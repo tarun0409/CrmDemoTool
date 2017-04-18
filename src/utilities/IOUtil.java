@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -49,7 +50,7 @@ public class IOUtil {
 		}
 		return properties;
 	}
-	public static JSONArray getRecordsFromCSV(String module, HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap) throws Exception
+	public static JSONArray getRecordsFromCSV(String module, HashMap<String,String> fieldTypes, HashMap<String, String> fieldLabelApiNameMap, DataUtil dataUtilObj) throws Exception
 	{
 		System.out.println("*****************************MODULE = "+module+" ******************************");
 		System.out.println("**************************\n"+fieldTypes+"\n********************");
@@ -59,6 +60,7 @@ public class IOUtil {
 		String[] headings = null;
 		boolean firstLine = true;
 		CSVParser csvRecords = CSVParser.parse(csvDataFile,Charset.defaultCharset() , CSVFormat.RFC4180);
+		ArrayList<String> lookupFields = new ArrayList<String>();
 		for (CSVRecord csvRecord : csvRecords)
 		{
 			int recordLength = 0;
@@ -69,12 +71,42 @@ public class IOUtil {
 				headings = new String[recordLength];
 				for(int i=0; i<recordLength; i++)
 				{
-					headings[i] = fieldLabelApiNameMap.get(trimString(csvRecord.get(i)));
+					String titleString = trimString(csvRecord.get(i));
+
+					headings[i] = fieldLabelApiNameMap.get(titleString);
+					String dataType = fieldTypes.get(headings[i]);
+					if(dataType!=null && dataType.equals("lookup"))
+					{
+						lookupFields.add(headings[i]);
+					}
 				}
 				continue;
 			}
 			JSONObject record = new JSONObject();
 			recordLength = csvRecord.size();
+			JSONArray lookups = dataUtilObj.getLookups(module);
+			if(lookupFields.size()>0)
+			{
+				int idsIter = 0;
+				for(int l=0; l<lookups.length(); l++)
+				{
+					JSONObject lookup = lookups.getJSONObject(l);
+					if(lookup.has("module") && !((lookup.getString("module")).equals("se_module")) && lookupFields.contains(lookup.getString("api_name")))
+					{
+						ArrayList<Long> ids = dataUtilObj.getIds(lookup.getString("module"));
+						if(ids!=null && !ids.isEmpty() && ids.size()>0)
+						{
+							if(idsIter>=ids.size())
+							{
+								idsIter=0;
+							}
+							Long id = ids.get(idsIter);
+							record.put(lookup.getString("api_name"), id);
+							idsIter++;
+						}
+					}
+				}
+			}
 			for(int i=0; i<recordLength; i++)
 			{
 				if(headings[i]==null)
@@ -87,37 +119,40 @@ public class IOUtil {
 				{
 					continue;
 				}
+				else if(dataType!=null && dataType.equals("lookup"))
+				{
+					String seModule = trimString(csvRecord.get(i));
+					if(seModule==null || seModule.isEmpty() || seModule.equals("nil"))
+					{
+						continue;
+					}
+					ArrayList<Long> ids = dataUtilObj.getIds(seModule);
+					if(ids!=null && ids.size()>0)
+					{
+						int idsIter = 0;
+						for(int l = 0; l<lookups.length(); l++)
+						{
+							JSONObject lookup = lookups.getJSONObject(l);
+							if(lookup.has("module") && (lookup.getString("module")).equals("se_module") && (lookup.getString("api_name")).equals(headings[i]))
+							{
+								if(idsIter>=ids.size())
+								{
+									idsIter=0;
+								}
+								Long id = ids.get(idsIter);
+								record.put(lookup.getString("api_name"), id);
+								record.put("se_module", seModule);
+								idsIter++;
+							}
+						}
+					}
+					
+				}
 				else if(DataTypes.textTypes.contains(dataType))
 				{
 					record.put(headings[i], trimString(csvRecord.get(i)));
 				}
 				else if(dataType.equals("ownerlookup"))
-				{
-					String str = trimString(csvRecord.get(i));
-					str = str != null? str = str.trim() : str;
-					try
-					{
-						long value = Long.parseLong(str);
-						record.put(headings[i], value);
-					}
-					catch(Exception e)
-					{
-						try
-						{
-							String[] temps = str.split("_");
-							if(temps.length>1)
-							{
-								long value = Long.parseLong(temps[1]);
-								record.put(headings[i], value);
-							}
-						}
-						catch(Exception e1)
-						{
-							continue;
-						}
-					}
-				}
-				else if(dataType.equals("lookup"))
 				{
 					String str = trimString(csvRecord.get(i));
 					str = str != null? str = str.trim() : str;

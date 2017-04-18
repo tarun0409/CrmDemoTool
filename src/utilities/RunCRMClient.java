@@ -27,6 +27,7 @@ public class RunCRMClient {
 		LOGGER.debug("\n\n\n:::::::::::::::::MODULES OBTAINED:::::::::::::::::::\n\n"+modules.toString()+"\n\n::::::::::::::::::::::::::\n\n");
 		JSONArray operations = properties.getJSONArray("operations");
 		LOGGER.debug("\n\n\n:::::::::::::::::OPERATIONS TO BE PERFORMED:::::::::::::::::::\n\n"+operations.toString()+"\n\n::::::::::::::::::::::::::\n\n");
+		DataUtil dataObj = new DataUtil();
 		for(int i=0; i<modules.length(); i++)
 		{
 			String module = modules.getString(i);
@@ -38,11 +39,12 @@ public class RunCRMClient {
 					LOGGER.debug("\n\n\n:::::::::::::::PERFORMING INSERT ON "+module+" ::::::::::::::::\n\n\n");
 					Get getObj = new Get(properties);
 					JSONObject fields = getObj.getModuleFields(module);
-					JSONArray dataArray = IOUtil.getRecordsFromCSV(module, ModuleUtil.getFieldTypes(fields), ModuleUtil.getFieldLabelApiNameMap(fields));
+					dataObj.setLookupMap(module, ModuleUtil.getLookupFields(fields));
+					JSONArray dataArray = IOUtil.getRecordsFromCSV(module, ModuleUtil.getFieldTypes(fields), ModuleUtil.getFieldLabelApiNameMap(fields), dataObj);
 					JSONObject data = new JSONObject();
 					data.put("data", dataArray);
 					Post postObj = new Post(properties);
-					postObj.postRecords(data, module);
+					postObj.postRecords(data, module, dataObj);
 				}
 				else if(operation.equals("delete"))
 				{
