@@ -5,11 +5,32 @@
 <head>
 <%@ page import="utilities.RunCRMClient" %>
 <%@ page import="utilities.AuthUtil" %>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.text2 {
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+ 	font-size: 16px;
+ 	line-height: 22px;
+ 	text-transform: uppercase;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
+<p class="text2">Thank you for using CRM Demo Tool. The data has been successfully imported into CRM.</p>
+<p class="text2">Please press the button to go back to home page</p>
 <a href="CRMTool.jsp" class="button">Go Back</a>
 <%
 	System.out.println(request.getParameter("code"));
@@ -17,7 +38,6 @@
 	{
 		RunCRMClient client = new RunCRMClient();
 		String authToken=(String)session.getAttribute("authToken");
-		//String authToken = AuthUtil.getAuthtoken(code);
 		client.startProcess(authToken);	
 	}
 	else

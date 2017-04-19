@@ -1,13 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <%@ page import="utilities.AuthUtil" %>
 <%@ page import="org.json.JSONObject" %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.text2 {
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+ 	font-size: 16px;
+ 	line-height: 22px;
+ 	text-transform: uppercase;
+}
+.well {
+	height: 100px;
+  	width: 550px;
+  	background: rgba(0, 0, 0, 0);
+  	border-radius: 10px;
+  	box-shadow: inset 0 0 10px black, 0 0 10px black;
+  	padding: 10px;
+  	display: inline-block;
+  	margin: 15px;
+  	vertical-align: top;
+  	text-align: center;
+}
+.userInfo {
+	font-weight: bold;
+}
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Please confirm the account being used</title>
+<title>Account Confirmation</title>
 </head>
 <body>
 <%
@@ -26,21 +61,22 @@
 		userFullName+="USER FULL NAME: "+user.getString("full_name")+"\n\n";
 	}
 %>
-<h3>WARNING: The tool is designed to make insert and delete operations on existing records!</h3>
-<h3>Hence kindly make sure you have logged in into the demo account for using this tool. Account details are below</h3>
+<div>
+<p class="text2">WARNING: The tool is designed to make insert and delete operations on existing records!</p>
+<p class="text2">Hence kindly make sure you have logged in into the demo account for using this tool. Account details are below</p>
+</div>
 <br>
-<h2>
-<%= userEmail %>
-</h2>
-<br>
-<h2>
-<%= userFullName %>
-</h2>
+<div class="well">
+<p class="userInfo"><%= userEmail %></p>
+<p class="userInfo"><%= userFullName %></p>
+</div>
+<br><br>
 <form action="StartProcess.jsp" method="post">
     <%
     session.setAttribute("authToken", authToken);
         %>
-        <input type="submit" value="Proceed">
-    </form>
+        <input type="submit" value="Proceed" id="submit" class="button">
+        <input type="submit" value="Go Back" id="back" class="button" formaction="CRMTool.jsp">      
+</form>
 </body>
 </html>
