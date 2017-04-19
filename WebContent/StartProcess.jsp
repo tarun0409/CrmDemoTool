@@ -16,9 +16,8 @@
 	if(!RunCRMClient.isReserved())
 	{
 		RunCRMClient client = new RunCRMClient();
-		String code=request.getParameter("code");
-		System.out.println(code);
-		String authToken = AuthUtil.getAuthtoken(code);
+		String authToken=(String)session.getAttribute("authToken");
+		//String authToken = AuthUtil.getAuthtoken(code);
 		client.startProcess(authToken);	
 	}
 	else
